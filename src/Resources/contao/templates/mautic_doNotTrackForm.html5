@@ -1,0 +1,15 @@
+<!-- indexer::stop -->
+<form id="<?= $this->id ?>" method="POST">
+    <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}"/>
+    <button name="mautic_do_not_track" value="<?= $this->buttonValue ?>" id="mautic_do_not_track_button" class="mautic_do_not_track_button"><?= $this->buttonLabel ?></button>
+</form>
+<script defer>
+    document.addEventListener('DOMContentLoaded',function(){
+        var objForm = document.getElementById('<?= $this->id ?>');
+        objForm.addEventListener('submit',function(objEvent){
+            // objEvent.preventDefault();
+            // return false;
+        },false);
+    });
+</script>
+<!-- indexer::continue -->

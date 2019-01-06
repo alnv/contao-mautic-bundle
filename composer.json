@@ -1,0 +1,50 @@
+{
+  "name": "alnv/contao-mautic-bundle",
+  "type": "contao-bundle",
+  "license": "LGPL-3.0-or-later",
+  "description": "This extension provides a Mautic integration for Contao CMS.",
+  "keywords": [ "contao", "mautic", "marketing", "automation", "funnel", "leads", "form", "landing page", "newsletter", "focus item" ],
+  "authors": [
+    {
+      "name": "Alexander Naumov",
+      "homepage": "https://alexandernaumov.de",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/alnv/contao-mautic-bundle/issues",
+    "wiki": "https://alexandernaumov.de"
+  },
+  "autoload": {
+    "psr-4": {
+      "Alnv\\MauticBundle\\": "src/"
+    },
+    "classmap": [
+      "src/Resources/contao/"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/config/",
+      "src/Resources/contao/dca/",
+      "src/Resources/contao/languages/",
+      "src/Resources/contao/templates/"
+    ]
+  },
+  "require": {
+    "php": "^7.1",
+    "contao/core-bundle": "^4.4"
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "replace": {
+    "contao-legacy/contao-mautic-bundle": "self.version"
+  },
+  "extra": {
+    "contao": {
+      "sources": {
+        "": "system/modules/contao-mautic-bundle"
+      }
+    },
+    "contao-manager-plugin": "Alnv\\MauticBundle\\ContaoManager\\Plugin"
+  }
+}
