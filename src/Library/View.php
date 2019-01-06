@@ -8,11 +8,15 @@ class View {
 
     public function getDoNotTrackForm() {
 
-        $arrSettings = [
+        $blnActiveTracking = !\Input::cookie('MAUTIC_DO_NOT_TRACK');
 
-            'buttonLabel' => 'Bitte schließen Sie mich von der Mautic Zählung aus.',
+        $arrSettings = [
+            'buttonLabel' => $blnActiveTracking ?
+                $GLOBALS['TL_LANG']['MSC']['mautic_do_not_track_button_label'] :
+                $GLOBALS['TL_LANG']['MSC']['mautic_track_button_label'],
             'id' => 'mautic_do_not_track_form',
-            'buttonValue' => 'disable'
+            'action' => \Environment::get( 'indexFreeRequest' ),
+            'buttonValue' => $blnActiveTracking ? 'disable' : 'enable'
         ];
 
         if ( \Input::post( 'mautic_do_not_track' ) ) {
@@ -20,11 +24,29 @@ class View {
             if ( \Input::post( 'mautic_do_not_track' ) == 'disable' ) {
 
                 \System::setCookie( 'MAUTIC_DO_NOT_TRACK', '1', time() + 31536000 );
+
+                $arrSettings['buttonLabel'] = $GLOBALS['TL_LANG']['MSC']['mautic_track_button_label'];
+                $arrSettings['buttonValue'] = 'enable';
             }
 
             else {
 
-                \System::setCookie( 'MAUTIC_DO_NOT_TRACK', '' );
+                \System::setCookie( 'MAUTIC_DO_NOT_TRACK', '', time() );
+
+                $arrSettings['buttonLabel'] = $GLOBALS['TL_LANG']['MSC']['mautic_do_not_track_button_label'];
+                $arrSettings['buttonValue'] = 'disable';
+            }
+
+            if ( \Input::post('isAjax') ) {
+
+                header('Content-Type: application/json');
+                echo json_encode( $arrSettings, 512 );
+                exit;
+            }
+
+            else {
+
+                \Controller :: reload();
             }
         }
 
