@@ -11,7 +11,7 @@ class Page {
 
     public function onPageGeneration( \PageModel $objPage, \LayoutModel &$objLayout, \PageRegular $objPageRegular ) {
 
-        if ( $objPage->excludeMautic || \Input::cookie('MAUTIC_DO_NOT_TRACK') ) {
+        if ( $objPage->exclude_mautic || \Input::cookie('MAUTIC_DO_NOT_TRACK') ) {
 
             return null;
         }
@@ -21,14 +21,14 @@ class Page {
 
         if ( $objRoot !== null ) {
 
-            if ( $objRoot->excludeMautic ) {
+            if ( $objRoot->exclude_mautic ) {
 
                 return null;
             }
 
-            if ( $objRoot->mauticHost ) {
+            if ( $objRoot->mautic_host ) {
 
-                $strHost = $objRoot->mauticHost;
+                $strHost = $objRoot->mautic_host;
             }
         }
 
