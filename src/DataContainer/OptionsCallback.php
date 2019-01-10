@@ -2,10 +2,19 @@
 
 namespace Alnv\MauticBundle\DataContainer;
 
+use Alnv\MauticBundle\Library\FocusItem;
 use Alnv\MauticBundle\Library\Roles;
 
 
-class FormField {
+class OptionsCallback {
+
+
+    public function getFocusItems() {
+
+        $objFocus = new FocusItem();
+
+        return $objFocus->getList();
+    }
 
 
     public function getRoles() {

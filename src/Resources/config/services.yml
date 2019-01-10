@@ -1,4 +1,4 @@
 services:
-    mautic.datacontainer.formfield:
-        class: Alnv\MauticBundle\DataContainer\FormField
+    mautic.datacontainer.options:
+        class: Alnv\MauticBundle\DataContainer\OptionsCallback
         public: true

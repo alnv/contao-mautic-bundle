@@ -52,4 +52,22 @@ class Api {
 
         return $objRolesApi->getList(null,0,0);
     }
+
+
+    public function getFocusItemsList() {
+
+        $objApi = new MauticApi();
+        $objFocusItemApi = $objApi->newApi('focus', $this->objAuth, $this->strUrl );
+
+        return $objFocusItemApi->getList(null, 0,0 );
+    }
+
+
+    public function getFocusItem( $strId ) {
+
+        $objApi = new MauticApi();
+        $objFocusItemApi = $objApi->newApi('focus', $this->objAuth, $this->strUrl );
+
+        return $objFocusItemApi->get( $strId );
+    }
 }

@@ -30,7 +30,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['mautic_role'] = [
         'tl_class' => 'w50',
         'includeBlankOption' => true
     ],
-    'options_callback' => [ 'mautic.datacontainer.formfield', 'getRoles' ],
+    'options_callback' => [ 'mautic.datacontainer.options', 'getRoles' ],
     'exclude' => true,
     'sql' => "varchar(255) NOT NULL default ''"
 ];
