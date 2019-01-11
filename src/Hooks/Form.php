@@ -15,8 +15,7 @@ class Form {
             return null;
         }
 
-        $objContact = new Contact();
-        $objContact->addForm( $arrForm['id'], $arrPost );
+        $objContact = new Contact( $arrForm, $arrPost );
         $objContact->addContact();
     }
 }

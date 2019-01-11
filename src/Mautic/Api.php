@@ -70,4 +70,31 @@ class Api {
 
         return $objFocusItemApi->get( $strId );
     }
+
+
+    public function getForms() {
+
+        $objApi = new MauticApi();
+        $objFormApi = $objApi->newApi('forms', $this->objAuth, $this->strUrl );
+
+        return $objFormApi->getList(null, 0,0 );
+    }
+
+
+    public function getSegments() {
+
+        $objApi = new MauticApi();
+        $objFormApi = $objApi->newApi('segments', $this->objAuth, $this->strUrl );
+
+        return $objFormApi->getList(null, 0,0 );
+    }
+
+
+    public function addSegment( $strSegmentId, $strContactId ) {
+
+        $objApi = new MauticApi();
+        $objFormApi = $objApi->newApi('segments', $this->objAuth, $this->strUrl );
+
+        return $objFormApi->addContact( $strSegmentId, $strContactId );
+    }
 }

@@ -41,6 +41,8 @@ class Page {
             }
         }
 
+        // @todo add logged user information as parameters
+
         $objLayout->script .= Scripts::trackingScript( $strHost );
     }
 

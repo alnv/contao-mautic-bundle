@@ -5,27 +5,17 @@ namespace Alnv\MauticBundle\Library;
 use Alnv\MauticBundle\Mautic\Api;
 
 
-class Roles {
+class Role {
 
 
-    protected $arrRoles = [];
-
-
-    public function __construct() {
-
-        $this->getRolesFromApi();
-    }
-
-
-    protected function getRolesFromApi() {
+    public function getRoles() {
 
         if ( \Cache::has('mautic_roles') ) {
 
-            $this->arrRoles = \Cache::get('mautic_roles');
-
-            return null;
+            return \Cache::get('mautic_roles');
         }
 
+        $arrReturn = [];
         $objApi = new Api();
         $arrRoles = $objApi->getRoles();
 
@@ -43,16 +33,12 @@ class Roles {
 
             if ( $arrField['isPublished'] ) {
 
-                $this->arrRoles[ $arrField['alias'] ] = $arrField['label'];
+                $arrReturn[ $arrField['alias'] ] = $arrField['label'];
             }
         }
 
-        \Cache::set( 'mautic_roles', $this->arrRoles );
-    }
+        \Cache::set( 'mautic_roles', $arrReturn );
 
-
-    public function getRoles() {
-
-        return $this->arrRoles;
+        return $arrReturn;
     }
 }

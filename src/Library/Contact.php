@@ -9,23 +9,14 @@ class Contact {
 
 
     protected $arrFormFields = [];
+    protected $arrForm = [];
     protected $arrData = [];
 
 
-    public function addContact() {
+    public function __construct( $arrForm, $arrValues ) {
 
-        if ( empty( $this->arrData ) ) {
-
-            return null;
-        }
-
-        $objApi = new Api();
-        $objApi->addContact( $this->arrData );
-    }
-
-
-    public function addForm( $strFormId, $arrValues ) {
-
+        $this->arrForm = $arrForm;
+        $strFormId = $arrForm['id'];
         $objDatabase = \Database::getInstance();
         $objFields = $objDatabase->prepare('SELECT * FROM tl_form_field WHERE pid = ? AND invisible != ?')->execute( $strFormId, '1' );
 
@@ -43,5 +34,22 @@ class Contact {
         }
 
         $this->arrData['ipAddress'] = $_SERVER['REMOTE_ADDR'];
+    }
+
+
+    public function addContact() {
+
+        if ( empty( $this->arrData ) ) {
+
+            return null;
+        }
+
+        $objApi = new Api();
+        $arrResult = $objApi->addContact( $this->arrData );
+
+        if ( is_array( $arrResult ) && $this->arrForm['mautic_add_to_segment'] ) {
+
+            $objApi->addSegment( $this->arrForm['mautic_add_to_segment'], $arrResult['contact']['id'] );
+        }
     }
 }

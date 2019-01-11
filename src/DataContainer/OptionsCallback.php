@@ -3,7 +3,8 @@
 namespace Alnv\MauticBundle\DataContainer;
 
 use Alnv\MauticBundle\Library\FocusItem;
-use Alnv\MauticBundle\Library\Roles;
+use Alnv\MauticBundle\Library\Segment;
+use Alnv\MauticBundle\Library\Role;
 
 
 class OptionsCallback {
@@ -11,16 +12,24 @@ class OptionsCallback {
 
     public function getFocusItems() {
 
-        $objFocus = new FocusItem();
+        $objFocusItem = new FocusItem();
 
-        return $objFocus->getList();
+        return $objFocusItem->getList();
     }
 
 
     public function getRoles() {
 
-        $objRoles = new Roles();
+        $objRole = new Role();
 
-        return $objRoles->getRoles();
+        return $objRole->getRoles();
+    }
+
+
+    public function getSegments() {
+
+        $objRole = new Segment();
+
+        return $objRole->getSegments();
     }
 }
