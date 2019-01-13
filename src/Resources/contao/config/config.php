@@ -26,3 +26,8 @@ array_insert( $GLOBALS['TL_CTE'], 4, [
 $GLOBALS['TL_HOOKS']['generatePage'][] = [ 'Alnv\MauticBundle\Hooks\Page', 'onPageGeneration' ];
 $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [ 'Alnv\MauticBundle\Hooks\Inserttag', 'parse' ];
 $GLOBALS['TL_HOOKS']['processFormData'][] = [ 'Alnv\MauticBundle\Hooks\Form', 'process' ];
+
+// $GLOBALS['TL_HOOKS']['createNewUser'][] = [ '', '' ]; // new user
+// $GLOBALS['TL_HOOKS']['closeAccount'][] = [ '', '' ]; // delete user
+// $GLOBALS['TL_HOOKS']['activateRecipient'][] = [ '', '' ]; // newsletter add
+// $GLOBALS['TL_HOOKS']['removeRecipient'][] = [ '', '' ]; // newsletter remove
