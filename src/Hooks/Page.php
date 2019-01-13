@@ -14,6 +14,7 @@ class Page {
 
         $objRoot = PageWizard::getRootPage( $objPage->id );
 
+        $this->addMauticFormScript( $objPage, $objRoot, $objLayout );
         $this->addTrackingScript( $objPage, $objRoot, $objLayout );
         $this->getFocusItem( $objPage, $objRoot, $objLayout );
     }
@@ -84,5 +85,24 @@ class Page {
         }
 
         $objLayout->script .= Scripts::focusItemScript( $strScript );
+    }
+
+
+    protected function addMauticFormScript( $objPage, $objRoot, &$objLayout ) {
+
+        if ( $objPage->mautic_use_form_script ) {
+
+            $strHost = \Config::get('mauticHost') ?: '';
+
+            if ( $objRoot !== null ) {
+
+                if ( $objRoot->mautic_host ) {
+
+                    $strHost = $objRoot->mautic_host;
+                }
+            }
+
+            $objLayout->script .= Scripts::getFormScript( $strHost );
+        }
     }
 }
