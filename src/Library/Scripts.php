@@ -16,4 +16,12 @@ class Scripts {
 
         return '<script id="mt-focus-item-script" defer>'. $strBody .'</script>';
     }
+
+
+    public static function getFormScript( $strHost ) {
+
+        $strScript = $strHost . '/media/js/mautic-form.js';
+        
+        return '<script id="mt-form-script" defer>if(typeof MauticSDKLoaded == \'undefined\'){var MauticSDKLoaded=true;var head=document.getElementsByTagName(\'head\')[0];var script=document.createElement(\'script\');script.type=\'text/javascript\';script.src=\''.$strScript.'\';script.onload=function(){MauticSDK.onLoad();};head.appendChild(script);var MauticDomain=\''.$strHost.'\';var MauticLang={\'submittingMessage\': "'.$GLOBALS['TL_LANG']['MSC']['mautic_form_loading'].'"}}</script>';
+    }
 }
