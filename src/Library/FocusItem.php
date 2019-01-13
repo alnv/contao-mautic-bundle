@@ -10,11 +10,6 @@ class FocusItem {
 
     public function getList() {
 
-        if ( \Cache::has('mautic_focus_items') ) {
-
-            return \Cache::get('mautic_focus_items');
-        }
-
         $arrReturn = [];
         $objApi = new Api();
         $arrFocusItems = $objApi->getFocusItemsList();
@@ -33,8 +28,6 @@ class FocusItem {
 
             $arrReturn[ $arrFocusItem['id'] ] = $arrFocusItem['name'];
         }
-
-        \Cache::set( 'mautic_focus_items', $arrReturn );
 
         return $arrReturn;
     }

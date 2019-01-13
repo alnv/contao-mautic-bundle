@@ -10,11 +10,6 @@ class Segment {
 
     public function getSegments() {
 
-        if ( \Cache::has('mautic_segments') ) {
-
-            return \Cache::get('mautic_segments');
-        }
-
         $arrReturn = [];
         $objApi = new Api();
         $arrSegments = $objApi->getSegments();
@@ -36,8 +31,6 @@ class Segment {
                 $arrReturn[ $arrSegment['id'] ] = $arrSegment['name'];
             }
         }
-
-        \Cache::set( 'mautic_segments', $arrReturn );
 
         return $arrReturn;
     }

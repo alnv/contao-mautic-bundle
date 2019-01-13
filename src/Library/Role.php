@@ -10,11 +10,6 @@ class Role {
 
     public function getRoles() {
 
-        if ( \Cache::has('mautic_roles') ) {
-
-            return \Cache::get('mautic_roles');
-        }
-
         $arrReturn = [];
         $objApi = new Api();
         $arrRoles = $objApi->getRoles();
@@ -36,8 +31,6 @@ class Role {
                 $arrReturn[ $arrField['alias'] ] = $arrField['label'];
             }
         }
-
-        \Cache::set( 'mautic_roles', $arrReturn );
 
         return $arrReturn;
     }
