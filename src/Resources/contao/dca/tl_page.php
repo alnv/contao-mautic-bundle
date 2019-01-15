@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_page']['fields']['exclude_mautic'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_page']['exclude_mautic'],
     'inputType' => 'checkbox',
     'eval' => [
-        'tl_class' => 'w50 m12'
+        'tl_class' => 'clr'
     ],
     'exclude' => true,
     'sql' => "char(1) NOT NULL default ''"

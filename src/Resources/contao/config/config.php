@@ -27,7 +27,14 @@ $GLOBALS['TL_HOOKS']['generatePage'][] = [ 'Alnv\MauticBundle\Hooks\Page', 'onPa
 $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = [ 'Alnv\MauticBundle\Hooks\Inserttag', 'parse' ];
 $GLOBALS['TL_HOOKS']['processFormData'][] = [ 'Alnv\MauticBundle\Hooks\Form', 'process' ];
 
-// $GLOBALS['TL_HOOKS']['createNewUser'][] = [ '', '' ]; // new user
-// $GLOBALS['TL_HOOKS']['closeAccount'][] = [ '', '' ]; // delete user
-// $GLOBALS['TL_HOOKS']['activateRecipient'][] = [ '', '' ]; // newsletter add
-// $GLOBALS['TL_HOOKS']['removeRecipient'][] = [ '', '' ]; // newsletter remove
+$GLOBALS['TL_HOOKS']['addComment'][] = [ 'Alnv\MauticBundle\Hooks\Comment', 'addComment' ];
+$GLOBALS['TL_HOOKS']['closeAccount'][] = [ 'Alnv\MauticBundle\Hooks\Registration', 'closeAccount' ];
+$GLOBALS['TL_HOOKS']['createNewUser'][] = [ 'Alnv\MauticBundle\Hooks\Registration', 'createNewUser' ];
+$GLOBALS['TL_HOOKS']['activateRecipient'][] = [ 'Alnv\MauticBundle\Hooks\Newsletter', 'activateRecipient' ];
+$GLOBALS['TL_HOOKS']['removeRecipient'][] = [ 'Alnv\MauticBundle\Hooks\Newsletter', 'removeFromNewsletter' ];
+
+$GLOBALS['MAUTIC'] = [];
+$GLOBALS['MAUTIC']['PARAMETERS'] = [
+    'zipcode' => 'postal',
+    'address1' => 'street'
+];

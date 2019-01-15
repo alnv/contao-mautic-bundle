@@ -2,3 +2,6 @@ services:
     mautic.datacontainer.options:
         class: Alnv\MauticBundle\DataContainer\OptionsCallback
         public: true
+    mautic.datacontainer.settings:
+        class: Alnv\MauticBundle\DataContainer\MauticSettings
+        public: true

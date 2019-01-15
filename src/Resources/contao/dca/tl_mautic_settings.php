@@ -6,17 +6,22 @@ $GLOBALS['TL_DCA']['tl_mautic_settings'] = [
 
         'dataContainer' => 'File',
         'closed' => true,
+        'onload_callback' => [
+            [ 'mautic.datacontainer.settings', 'removeNewsletterPalette' ]
+        ]
     ],
 
     'palettes' => [
 
-        '__selector__' => ['mauticUseApi'],
-        'default' => '{general_settings},mauticHost;{api_settings},mauticUseApi;'
+        '__selector__' => ['mauticUseApi', 'mauticUseNewsletter', 'mauticCreateNewsletterContact' ],
+        'default' => '{general_settings},mauticHost;{api_settings},mauticUseApi;{newsletter_settings},mauticUseNewsletter'
     ],
 
     'subpalettes' => [
 
-        'mauticUseApi' => 'mauticApiUser,mauticApiPassword'
+        'mauticUseApi' => 'mauticApiUser,mauticApiPassword',
+        'mauticUseNewsletter' => 'mauticCreateNewsletterContact',
+        'mauticCreateNewsletterContact' => 'mauticAddSegmentOnRecipientActivation,mauticAddSegmentOnRemoveRecipient'
     ],
 
     'fields' => [
@@ -55,10 +60,48 @@ $GLOBALS['TL_DCA']['tl_mautic_settings'] = [
             'inputType' => 'text',
             'eval' => [
                 'rgxp' => 'url',
-                'hideInput' => true,
                 'tl_class' => 'w50',
                 'mandatory' => true
             ]
+        ],
+
+        'mauticUseNewsletter' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_mautic_settings']['mauticUseNewsletter'],
+            'inputType' => 'checkbox',
+            'eval' => [
+                'submitOnChange' => true
+            ]
+        ],
+
+        'mauticCreateNewsletterContact' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_mautic_settings']['mauticCreateNewsletterContact'],
+            'inputType' => 'checkbox',
+            'eval' => [
+                'tl_class' => 'clr',
+                'submitOnChange' => true
+            ],
+        ],
+
+        'mauticAddSegmentOnRecipientActivation' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_mautic_settings']['mauticAddSegmentOnRecipientActivation'],
+            'inputType' => 'select',
+            'eval' => [
+                'chosen' => true,
+                'tl_class' => 'w50',
+                'includeBlankOption' => true
+            ],
+            'options_callback' => [ 'mautic.datacontainer.options', 'getSegments' ]
+        ],
+
+        'mauticAddSegmentOnRemoveRecipient' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_mautic_settings']['mauticAddSegmentOnRemoveRecipient'],
+            'inputType' => 'select',
+            'eval' => [
+                'chosen' => true,
+                'tl_class' => 'w50',
+                'includeBlankOption' => true
+            ],
+            'options_callback' => [ 'mautic.datacontainer.options', 'getSegments' ]
         ]
     ]
 ];

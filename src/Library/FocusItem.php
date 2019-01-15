@@ -2,17 +2,16 @@
 
 namespace Alnv\MauticBundle\Library;
 
-use Alnv\MauticBundle\Mautic\Api;
+use Alnv\MauticBundle\Mautic\ApiLayer;
 
 
-class FocusItem {
+class FocusItem extends ApiLayer {
 
 
     public function getList() {
 
-        $arrReturn = [];
-        $objApi = new Api();
-        $arrFocusItems = $objApi->getFocusItemsList();
+        $arrReturn = [];;
+        $arrFocusItems = $this->objApi->getFocusItemsList();
 
         if ( !is_array( $arrFocusItems ) ) {
 
@@ -35,9 +34,8 @@ class FocusItem {
 
     public function getById( $strId, $blnScript = true ) {
 
-        $objApi = new Api();
         $varReturn = $blnScript ? '' : [];
-        $arrFocusItem = $objApi->getFocusItem( $strId );
+        $arrFocusItem = $this->objApi->getFocusItem( $strId );
 
         if ( !is_array( $arrFocusItem ) ) {
 

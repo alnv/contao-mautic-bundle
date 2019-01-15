@@ -2,20 +2,15 @@
 
 namespace Alnv\MauticBundle\Library;
 
-use Alnv\MauticBundle\Mautic\Api;
+use Alnv\MauticBundle\Mautic\ApiLayer ;
 
 
-class Contact {
+class Contact extends ApiLayer {
 
 
-    protected $arrFormFields = [];
-    protected $arrForm = [];
-    protected $arrData = [];
+    public function addContactByForm( $arrForm, $arrValues ) {
 
-
-    public function __construct( $arrForm, $arrValues ) {
-
-        $this->arrForm = $arrForm;
+        $arrData = [];
         $strFormId = $arrForm['id'];
         $objDatabase = \Database::getInstance();
         $objFields = $objDatabase->prepare('SELECT * FROM tl_form_field WHERE pid = ? AND invisible != ?')->execute( $strFormId, '1' );
@@ -29,27 +24,26 @@ class Contact {
 
             if ( $objFields->use_mautic && $objFields->mautic_role ) {
 
-                $this->arrData[ $objFields->mautic_role ] = $arrValues[ $objFields->name ];
+                $arrData[ $objFields->mautic_role ] = $arrValues[ $objFields->name ];
             }
         }
 
-        $this->arrData['ipAddress'] = $_SERVER['REMOTE_ADDR'];
+        $this->addContact( $arrData, [
+            'addToSegment' => $arrForm['mautic_add_to_segment'],
+            'segmentId' => $arrForm['mautic_add_to_segment']
+        ]);
     }
 
 
-    public function addContact() {
+    public function addContact( $arrData, $arrSettings = [] ) {
 
-        if ( empty( $this->arrData ) ) {
+        $arrData['ipAddress'] = $_SERVER['REMOTE_ADDR'];
 
-            return null;
-        }
+        $arrResult = $this->objApi->addContact( $arrData );
 
-        $objApi = new Api();
-        $arrResult = $objApi->addContact( $this->arrData );
+        if ( is_array( $arrResult ) && $arrSettings['addToSegment'] ) {
 
-        if ( is_array( $arrResult ) && $this->arrForm['mautic_add_to_segment'] ) {
-
-            $objApi->addSegment( $this->arrForm['mautic_add_to_segment'], $arrResult['contact']['id'] );
+            $this->objApi->addSegment( $arrSettings['segmentId'], $arrResult['contact']['id'] );
         }
     }
 }

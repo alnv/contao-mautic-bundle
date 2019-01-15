@@ -2,35 +2,36 @@
 
 namespace Alnv\MauticBundle\Library;
 
-use Alnv\MauticBundle\Mautic\Api;
+use Alnv\MauticBundle\Mautic\ApiLayer;
 
 
-class Role {
+class Role extends ApiLayer {
 
 
     public function getRoles() {
 
         $arrReturn = [];
-        $objApi = new Api();
-        $arrRoles = $objApi->getRoles();
+        $arrContactFields = $this->objApi->getContactFields();
 
-        if ( !is_array( $arrRoles ) ) {
-
-            return null;
-        }
-
-        if ( !isset( $arrRoles['fields'] ) || !is_array( $arrRoles['fields'] ) ) {
+        if ( !is_array( $arrContactFields ) ) {
 
             return null;
         }
 
-        foreach ( $arrRoles['fields'] as $arrField ) {
+        if ( !isset( $arrContactFields['fields'] ) || !is_array( $arrContactFields['fields'] ) ) {
+
+            return null;
+        }
+
+        foreach ( $arrContactFields['fields'] as $arrField ) {
 
             if ( $arrField['isPublished'] ) {
 
                 $arrReturn[ $arrField['alias'] ] = $arrField['label'];
             }
         }
+
+        // @todo add companies roles
 
         return $arrReturn;
     }

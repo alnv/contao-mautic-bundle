@@ -2,17 +2,16 @@
 
 namespace Alnv\MauticBundle\Library;
 
-use Alnv\MauticBundle\Mautic\Api;
+use Alnv\MauticBundle\Mautic\ApiLayer;
 
 
-class Segment {
+class Segment extends ApiLayer{
 
 
     public function getSegments() {
 
         $arrReturn = [];
-        $objApi = new Api();
-        $arrSegments = $objApi->getSegments();
+        $arrSegments = $this->objApi->getSegments();
 
         if ( !is_array( $arrSegments ) ) {
 

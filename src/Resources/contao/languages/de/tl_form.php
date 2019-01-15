@@ -2,8 +2,8 @@
 
 $GLOBALS['TL_LANG']['tl_form']['mautic_legend'] = 'Mautic-Einstellungen';
 
-$GLOBALS['TL_LANG']['tl_form']['use_mautic'] = [ 'Mautic verwenden', 'Hier können Sie die Mautic-Einstellungen aktivieren.' ];
-$GLOBALS['TL_LANG']['tl_form']['mautic_create_contact'] = [ 'Kontakt erstellen', 'Nachdem absenden des Formulars wird ein neuer Kontakt in Mautic angeleget.' ];
+$GLOBALS['TL_LANG']['tl_form']['use_mautic'] = [ 'Mautic aktivieren', 'Hier kannst du deine Mautic Konfiguration verwalten.' ];
+$GLOBALS['TL_LANG']['tl_form']['mautic_create_contact'] = [ 'Lead erzeugen', 'Nach dem absenden des Formulars wird ein neuer Lead erzeugt.' ];
 
-$GLOBALS['TL_LANG']['tl_form']['mautic_add_to_segment'] = [ 'Zum Segment hinzufügen', 'Hier können Sie den Kontakt zum Segment hinzufügen.' ];
-$GLOBALS['TL_LANG']['tl_form']['mautic_segment'] = [ 'Segment', 'Bitte wählen Sie ein Segment aus.' ];
+$GLOBALS['TL_LANG']['tl_form']['mautic_add_to_segment'] = [ 'Zum Segment hinzufügen', 'Hier kannst du dein Lead zu einem Segment hinzufügen.' ];
+$GLOBALS['TL_LANG']['tl_form']['mautic_segment'] = [ 'Segment', 'Hier kannst du ein Segment auswählen, welches dem Lead zugeordnet wird.' ];

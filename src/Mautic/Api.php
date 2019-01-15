@@ -15,8 +15,6 @@ class Api {
 
     public function __construct( $arrSettings = [] ) {
 
-        // impl global mautic settings getter
-
         $arrSettings = [
 
             'userName' => \Config::get('mauticApiUser'),
@@ -25,7 +23,12 @@ class Api {
 
         if ( !\Config::get('mauticUseApi') ) {
 
-            //@todo system log
+            \System::log( 'Mautic Base URL is missing.', __METHOD__, TL_ERROR );
+
+            return null;
+        }
+
+        if ( !\Config::get('mauticUseApi') ) {
 
             return null;
         }
@@ -33,10 +36,26 @@ class Api {
         $objApiAuth = new ApiAuth();
         $this->strUrl = \Config::get('mauticHost');
         $this->objAuth = $objApiAuth->newAuth( $arrSettings, 'BasicAuth' );
+
+        $objApi = new MauticApi();
+        $objMauticVersion = $objApi->newApi('contacts', $this->objAuth, $this->strUrl );
+        $objMauticVersion->getList( null, 0, 1 );
+
+        if ( !$objMauticVersion->getMauticVersion() ) {
+
+            \System::log( $GLOBALS['TL_LANG']['MSC']['mautic_invalid_access_log'], __METHOD__, TL_ERROR );
+
+            \Message::addError( $GLOBALS['TL_LANG']['MSC']['mautic_invalid_access_log'] );
+        }
     }
 
 
     public function addContact( $arrData ) {
+
+        if ( !$this->objAuth ) {
+
+            return null;
+        }
 
         $objApi = new MauticApi();
         $objContactsApi = $objApi->newApi('contacts', $this->objAuth, $this->strUrl );
@@ -45,24 +64,56 @@ class Api {
     }
 
 
-    public function getRoles() {
+    public function getContactFields() {
 
-        if ( \Cache::has('mautic_roles') ) {
+        if ( !$this->objAuth ) {
 
-            return \Cache::get('mautic_roles');
+            return null;
+        }
+
+        if ( \Cache::has('mautic_contact_fields') ) {
+
+            return \Cache::get('mautic_contact_fields');
         }
 
         $objApi = new MauticApi();
-        $objRolesApi = $objApi->newApi('contactFields', $this->objAuth, $this->strUrl );
-        $arrRolesList = $objRolesApi->getList(null,0,0);
+        $objContactFieldsApi = $objApi->newApi('contactFields', $this->objAuth, $this->strUrl );
+        $arrContactFieldsList = $objContactFieldsApi->getList(null,0,0);
 
-        \Cache::set( 'mautic_roles', $arrRolesList );
+        \Cache::set( 'mautic_contact_fields', $arrContactFieldsList );
 
-        return $arrRolesList;
+        return $arrContactFieldsList;
+    }
+
+
+    public function getCompaniesFields() {
+
+        if ( !$this->objAuth ) {
+
+            return null;
+        }
+
+        if ( \Cache::has('mautic_companies_fields') ) {
+
+            return \Cache::get('mautic_companies_fields');
+        }
+
+        $objApi = new MauticApi();
+        $objCompaniesFieldsApi = $objApi->newApi('companyFields', $this->objAuth, $this->strUrl );
+        $arrCompaniesFieldsList = $objCompaniesFieldsApi->getList(null,0,0);
+
+        \Cache::set( 'mautic_contact_fields', $arrCompaniesFieldsList );
+
+        return $arrCompaniesFieldsList;
     }
 
 
     public function getFocusItemsList() {
+
+        if ( !$this->objAuth ) {
+
+            return null;
+        }
 
         if ( \Cache::has('mautic_focus_items') ) {
 
@@ -81,6 +132,11 @@ class Api {
 
     public function getFocusItem( $strId ) {
 
+        if ( !$this->objAuth ) {
+
+            return null;
+        }
+
         if ( \Cache::has( 'mautic_focus_item' . $strId ) ) {
 
             return \Cache::get( 'mautic_focus_item' . $strId );
@@ -97,6 +153,11 @@ class Api {
 
 
     public function getForms() {
+
+        if ( !$this->objAuth ) {
+
+            return null;
+        }
 
         if ( \Cache::has('mautic_forms') ) {
 
@@ -115,6 +176,11 @@ class Api {
 
     public function getForm( $strId ) {
 
+        if ( !$this->objAuth ) {
+
+            return null;
+        }
+
         if ( \Cache::has( 'mautic_form_' . $strId ) ) {
 
             return \Cache::get( 'mautic_form_' . $strId );
@@ -132,6 +198,11 @@ class Api {
 
     public function getSegments() {
 
+        if ( !$this->objAuth ) {
+
+            return null;
+        }
+
         if ( \Cache::has('mautic_segments') ) {
 
             return \Cache::get('mautic_segments');
@@ -148,6 +219,11 @@ class Api {
 
 
     public function addSegment( $strSegmentId, $strContactId ) {
+
+        if ( !$this->objAuth ) {
+
+            return null;
+        }
 
         $objApi = new MauticApi();
         $objFormApi = $objApi->newApi('segments', $this->objAuth, $this->strUrl );

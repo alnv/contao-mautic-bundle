@@ -27,6 +27,7 @@ class Page {
             return null;
         }
 
+        $arrParameter = [];
         $strHost = \Config::get('mauticHost') ?: '';
 
         if ( $objRoot !== null ) {
@@ -42,9 +43,16 @@ class Page {
             }
         }
 
-        // @todo add logged user information as parameters
+        if ( FE_USER_LOGGED_IN ) {
 
-        $objLayout->script .= Scripts::trackingScript( $strHost );
+            $objUser = \FrontendUser::getInstance();
+            $arrParameter['email'] = $objUser->email;
+            $arrParameter['lastname'] = $objUser->lastname;
+            $arrParameter['firstname'] = $objUser->firstname;
+            $arrParameter['company'] = $objUser->company ?: '';
+        }
+
+        $objLayout->script .= Scripts::trackingScript( $strHost, $arrParameter );
     }
 
 

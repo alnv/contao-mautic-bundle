@@ -2,17 +2,16 @@
 
 namespace Alnv\MauticBundle\Library;
 
-use Alnv\MauticBundle\Mautic\Api;
+use Alnv\MauticBundle\Mautic\ApiLayer;
 
 
-class Form {
+class Form extends ApiLayer {
 
 
     public function getForms() {
 
         $arrReturn = [];
-        $objApi = new Api();
-        $arrForms = $objApi->getForms();
+        $arrForms = $this->objApi->getForms();
 
         if ( !is_array( $arrForms ) ) {
 
@@ -38,8 +37,7 @@ class Form {
 
     public function getFormTemplate( $strId ) {
 
-        $objApi = new Api();
-        $arrForm = $objApi->getForm( $strId );
+        $arrForm = $this->objApi->getForm( $strId );
 
         if ( !is_array( $arrForm ) ) {
 
