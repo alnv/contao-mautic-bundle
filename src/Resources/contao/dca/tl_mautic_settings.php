@@ -34,7 +34,8 @@ $GLOBALS['TL_DCA']['tl_mautic_settings'] = [
                 'tl_class' => 'w50',
                 'mandatory' => true,
                 'decodeEntities' => true
-            ]
+            ],
+            'save_callback' => [ [ 'mautic.datacontainer.settings', 'validateUrl' ] ]
         ],
 
         'mauticUseApi' => [
