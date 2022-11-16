@@ -1,4 +1,4 @@
-** This extension is unmaintained! **
+**This extension is unmaintained!**
 
 
 Mautic Extension for Contao CMS
