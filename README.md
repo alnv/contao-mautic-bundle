@@ -1,3 +1,6 @@
+** This extension is unmaintained! **
+
+
 Mautic Extension for Contao CMS
 =============================================
 
